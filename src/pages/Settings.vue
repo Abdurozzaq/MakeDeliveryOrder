@@ -138,7 +138,6 @@ export default {
       alamat_perusahaan: null,
       no_telp_perusahaan: null,
       no_fax_perusahaan: null,
-      test: null,
       // Loading animation
       settingsLoading: false,
     }
@@ -173,7 +172,7 @@ export default {
       let currentObj = this
       currentObj.$q.notify({
         message: 'Gagal Untuk Men-update Settings',
-        icon: 'done_outline',
+        icon: 'clear',
         color: 'red'
       })
     },
@@ -182,7 +181,7 @@ export default {
       let currentObj = this
       currentObj.$q.notify({
         message: 'Gagal Mendapatkan Data Lama',
-        icon: 'done_outline',
+        icon: 'clear',
         color: 'red'
       })
     },

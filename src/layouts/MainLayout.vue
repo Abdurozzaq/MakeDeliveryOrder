@@ -60,12 +60,21 @@ export default {
     return {
       leftDrawerOpen: false,
       essentialLinks: [
+
+        {
+          title: 'Buat Surat Jalan',
+          caption: 'Buat Surat Jalan Baru Disini.',
+          icon: 'add',
+          link: '/'
+        },
+        
         {
           title: 'Settings Perusahaan',
-          caption: 'Untuk Data Perusahaan',
+          caption: 'Untuk Data Perusahaan.',
           icon: 'book',
           link: '/settings'
         },
+
       ]
     }
   }
