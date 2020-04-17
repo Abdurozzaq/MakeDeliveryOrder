@@ -5,13 +5,13 @@
       <div class="col-12">
         <q-card class="q-mx-xl q-my-md">
           <q-card-section class="bg-primary text-white">
-            <div class="text-h6">Buat Surat Jalan</div>
-            <div class="text-subtitle2">Buat surat jalan disini.</div>
+            <div class="text-h6">Edit Surat Jalan</div>
+            <div class="text-subtitle2">Edit surat jalan disini.</div>
           </q-card-section>
 
           <q-separator />
 
-          <q-form @submit="buatSuratJalan">
+          <q-form @submit="editSuratJalan">
             <q-card-section>
               <div class="row">
                 <div class="col-8">
@@ -258,7 +258,7 @@
 
 import { required } from 'vuelidate/lib/validators';
 export default {
-  name: 'PageBuatSuratJalan',
+  name: 'PageeditSuratJalan',
 
   data () {
     return {
@@ -320,7 +320,7 @@ export default {
   },
 
   methods: {
-    showBuatSuratJalanSuccess: function() {
+    showeditSuratJalanSuccess: function() {
       let currentObj = this
       currentObj.$q.notify({
         message: 'Berhasil Membuat Surat Jalan!',
@@ -329,7 +329,7 @@ export default {
       })
     },
 
-    showBuatSuratJalanError: function() {
+    showeditSuratJalanError: function() {
       let currentObj = this
       currentObj.$q.notify({
         message: 'Gagal Membuat Surat Jalan',
@@ -338,7 +338,7 @@ export default {
       })
     },
 
-    buatSuratJalan: function() {
+    editSuratJalan: function() {
       let currentObj = this
         
       
@@ -348,84 +348,58 @@ export default {
 
         var existing = JSON.parse(localStorage.getItem('suratJalan'));
 
-        let formData = [ 
-        {
-          id: currentObj.id,
-          judul_surat_jalan: currentObj.judul_surat_jalan,
-          no_surat_jalan: currentObj.no_surat_jalan,
-          nama_barang: currentObj.nama_barang,
-          nama_customer: currentObj.nama_customer,
-          transporter: currentObj.transporter,
-          no_do_po: currentObj.no_do_po,
-          no_kendaraan: currentObj.no_kendaraan,
-          gross: currentObj.gross,
-          tare: currentObj.tare,
-          netto: currentObj.netto,
-          supir: currentObj.supir,
-          petugas: currentObj.petugas,
-          disabled: false
-        }
-      ]   
+        let id = currentObj.$route.query.id
 
-      let formDataNotNull =  
-        {
-          id: currentObj.id,
-          judul_surat_jalan: currentObj.judul_surat_jalan,
-          no_surat_jalan:  currentObj.no_surat_jalan,
-          nama_barang: currentObj.nama_barang,
-          nama_customer: currentObj.nama_customer,
-          transporter: currentObj.transporter,
-          no_do_po: currentObj.no_do_po,
-          no_kendaraan: currentObj.no_kendaraan,
-          gross: currentObj.gross,
-          tare: currentObj.tare,
-          netto: currentObj.netto,
-          supir: currentObj.supir,
-          petugas: currentObj.petugas,
-          disabled: false
-        } 
+        existing[id].no_surat_jalan = currentObj.no_surat_jalan
+        existing[id].judul_surat_jalan = currentObj.judul_surat_jalan
+        existing[id].nama_barang = currentObj.nama_barang
+        existing[id].nama_customer = currentObj.nama_customer
+        existing[id].transporter = currentObj.transporter
+        existing[id].no_do_po = currentObj.no_do_po
+        existing[id].no_kendaraan = currentObj.no_kendaraan
+        existing[id].gross = currentObj.gross
+        existing[id].tare = currentObj.tare
+        existing[id].netto = currentObj.netto
+        existing[id].supir = currentObj.supir
+        existing[id].petugas = currentObj.petugas        
 
-        if(existing != null) {
-          existing.push(formDataNotNull)
-          localStorage.setItem('suratJalan', JSON.stringify(existing));
-        } else {
-          localStorage.setItem('suratJalan', JSON.stringify(formData));
-        }
+        localStorage.setItem('suratJalan', JSON.stringify(existing));
 
-        currentObj.showBuatSuratJalanSuccess()
+        currentObj.showeditSuratJalanSuccess()
         currentObj.createSuratLoading = false
-        currentObj.getUniqueId()
       } catch (e) {
         console.log(e)
         // data wasn't successfully saved due to
         // a Web Storage API error
-        currentObj.showBuatSuratJalanError()
+        currentObj.showeditSuratJalanError()
         currentObj.createSuratLoading = false
       }
     },
 
-    getUniqueId () {
+    getOldData: function() {
       let currentObj = this
-      // Get the existing data
-      var existing = JSON.parse(localStorage.getItem('suratJalan'));
+      let existing = JSON.parse(localStorage.getItem('suratJalan'));
+      let id = currentObj.$route.query.id
+      currentObj.no_surat_jalan = existing[id].no_surat_jalan 
+      currentObj.judul_surat_jalan = existing[id].judul_surat_jalan 
+      currentObj.nama_barang = existing[id].nama_barang 
+      currentObj.nama_customer = existing[id].nama_customer 
+      currentObj.transporter = existing[id].transporter 
+      currentObj.no_do_po = existing[id].no_do_po 
+      currentObj.no_kendaraan = existing[id].no_kendaraan 
+      currentObj.gross = existing[id].gross 
+      currentObj.tare = existing[id].tare 
+      currentObj.netto = existing[id].netto 
+      currentObj.supir = existing[id].supir 
+      currentObj.petugas = existing[id].petugas 
 
-      if (!existing) {
-        currentObj.id = 0
-        currentObj.no_surat_jalan = 1
-        
-      } else {
-        currentObj.id = existing.length
-        currentObj.no_surat_jalan = existing.length + 1 
-        
-      }
-    },
 
-    
+    }
   }, // methods
 
   mounted: function() {
     let currentObj = this
-    currentObj.getUniqueId()
+    currentObj.getOldData()
   }, // Mounted
 }
 </script>

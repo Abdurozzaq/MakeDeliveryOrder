@@ -67,7 +67,14 @@ export default {
           icon: 'add',
           link: '/'
         },
-        
+
+        {
+          title: 'Data List Surat Jalan',
+          caption: 'Edit Atau Delete Surat Jalan Disini.',
+          icon: 'list',
+          link: '/list'
+        },
+
         {
           title: 'Settings Perusahaan',
           caption: 'Untuk Data Perusahaan.',

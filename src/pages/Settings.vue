@@ -110,7 +110,7 @@
             <q-separator />
 
             <q-card-actions align="right">
-              <q-btn type="submit" flat>Update</q-btn>
+              <q-btn type="submit" color="primary">Update</q-btn>
             </q-card-actions>
           </q-form>
           
