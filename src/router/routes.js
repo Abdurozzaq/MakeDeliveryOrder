@@ -10,6 +10,7 @@ const routes = [
       { path: '/edit', component: () => import('pages/EditSuratJalan.vue') },
       { path: '/parseCsv', component: () => import('pages/ImportCsv.vue') },
       { path: '/print', component: () => import('pages/PrintPreview.vue') },
+      { path: '/trash', component: () => import('pages/DataListDeletedSuratJalan.vue') },
     ]
   }
 ]

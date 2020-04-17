@@ -77,16 +77,22 @@ export default {
 
         {
           title: 'Settings Perusahaan',
-          caption: 'Untuk Data Perusahaan.',
+          caption: 'Untuk Edit Data Perusahaan.',
           icon: 'book',
           link: '/settings'
         },
 
         {
           title: 'Import Data Surat Jalan',
-          caption: 'Semua Data akan di gantikan.',
+          caption: 'Semua Data akan di gantikan saat di import.',
           icon: 'publish',
           link: '/parseCsv'
+        },
+        {
+          title: 'Data List Surat Jalan Terhapus',
+          caption: 'Lihat Surat Jalan yang terhapus.',
+          icon: 'delete',
+          link: '/trash'
         },
 
       ]

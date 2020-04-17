@@ -135,7 +135,7 @@
                       outlined
                       label="No Kendaraan" 
                       hint="Required"
-                      placeholder="Masukan No Kendaraan." 
+                      placeholder="Masukan No Kendaraan Dalam kg." 
                       type="text"
                       v-model.trim="no_kendaraan"
                       @input="$v.no_kendaraan.$touch()"
@@ -154,8 +154,8 @@
                       class="q-mr-sm"
                       outlined
                       label="Gross" 
-                      hint="Required"
-                      placeholder="Masukan Gross Barang." 
+                      hint="Required | Satuan Kilogram"
+                      placeholder="Masukan Gross Barang Dalam kg." 
                       type="text"
                       v-model.trim="gross"
                       @input="$v.gross.$touch()"
@@ -170,7 +170,7 @@
                       class="q-mr-sm"
                       outlined
                       label="Tare" 
-                      hint="Required"
+                      hint="Required | Satuan Kilogram"
                       placeholder="Masukan Tare Barang." 
                       type="text"
                       v-model.trim="tare"
@@ -186,8 +186,8 @@
                       class="q-mr-sm"
                       outlined
                       label="Netto" 
-                      hint="Required"
-                      placeholder="Masukan Netto Barang." 
+                      hint="Required | Satuan Kilogram"
+                      placeholder="Masukan Netto Barang Dalam kg." 
                       type="text"
                       v-model.trim="netto"
                       @input="$v.netto.$touch()"
@@ -395,6 +395,8 @@ export default {
         currentObj.showBuatSuratJalanSuccess()
         currentObj.createSuratLoading = false
         currentObj.getUniqueId()
+        currentObj.$router.push('/list')
+
       } catch (e) {
         console.log(e)
         // data wasn't successfully saved due to
@@ -420,7 +422,6 @@ export default {
       }
     },
 
-    
   }, // methods
 
   mounted: function() {

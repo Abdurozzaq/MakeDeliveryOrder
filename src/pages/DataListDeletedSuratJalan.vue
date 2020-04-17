@@ -4,8 +4,8 @@
       <div class="col-12">
         <q-card class="q-mx-xl q-my-md">
           <q-card-section class="bg-primary text-white">
-            <div class="text-h6">Data List Surat Jalan</div>
-            <div class="text-subtitle2">Table Data Surat Jalan.</div>
+            <div class="text-h6">Data List Surat Jalan Yang Terhapus</div>
+            <div class="text-subtitle2">Table Data Surat Jalan Yang Terhapus.</div>
           </q-card-section>
 
           <q-separator />
@@ -31,13 +31,6 @@
 
                 <q-btn color="primary" @click="searchById" class="q-mr-md" label="Cari"/>
                 
-                <q-btn
-                  color="primary"
-                  icon-right="archive"
-                  label="Export to csv"
-                  no-caps
-                  @click="exportTable"
-                />
 
               </template>
 
@@ -72,10 +65,7 @@
                     <div class="text-left">
                       <div class="row self-center">
                         
-                        <q-btn color="primary" class="q-mr-md" label="Edit" :to="{ path: 'edit', query: {id: props.row.id} }" icon="edit" />
-                        <q-btn color="red" class="q-mr-md" label="Soft Delete" @click="softDeleteSuratJalan(props.row.id)" icon="delete" />
-                        <q-btn color="green" class="q-mr-md" label="Print" :to="{ path: 'print', query: {id: props.row.id} }" icon="print" />
-
+                        <q-btn color="red" class="q-mr-md" label="Aktifkan" @click="enableSuratJalan(props.row.id)" icon="publish" />
                       </div>
                     </div>
                   </q-td>
@@ -88,49 +78,19 @@
          
         </q-card>
       </div>
-    </div>  
-
+    </div> 
   </div>
 </template>
 
 <script >
-import { exportFile } from 'quasar'
-
-function wrapCsvValue (val, formatFn) {
-  let formatted = formatFn !== void 0
-    ? formatFn(val)
-    : val
-
-  formatted = formatted === void 0 || formatted === null
-    ? ''
-    : String(formatted)
-
-  formatted = formatted.split('"').join('""')
-  /**
-   * Excel accepts \n and \r in strings, but some other CSV parsers do not
-   * Uncomment the next two lines to escape new lines
-   */
-  // .split('\n').join('\\n')
-  // .split('\r').join('\\r')
-
-  return `"${formatted}"`
-}
-
 export default {
-  name: 'PageDataListSuratJalan',
-
-  data () {
+  name: 'PageDataListDeletedSuratJalan',
+  data() {
     return {
-
-      parseCsv: [],
-
       data: [],
       list: null,
-      
       // Search Keyword
       search: null,
-
-
       filter: '',
       loading: false,
       pagination: {
@@ -243,9 +203,9 @@ export default {
            
         },
       ],
-
     }
-  }, // data
+
+  }, // Data
 
   methods: {
     showMemuatSuratJalanError: function() {
@@ -261,7 +221,7 @@ export default {
 
       try {
         if (localStorage.getItem('suratJalan') != null) {
-          currentObj.list = JSON.parse(localStorage.getItem('suratJalan')).filter(suratJalan => suratJalan.disabled === "false")  
+          currentObj.list = JSON.parse(localStorage.getItem('suratJalan')).filter(suratJalan => suratJalan.disabled === "true")  
         } else {
           currentObj.list = [] 
         }
@@ -275,25 +235,25 @@ export default {
     /**
       * Soft Delete Feature
       */
-    showsoftDeleteSuratJalanSuccess: function() {
+    showEnableSuratJalanSuccess: function() {
       let currentObj = this
       currentObj.$q.notify({
-        message: 'Berhasil Menghapus Surat Jalan!',
+        message: 'Berhasil Mengaktifkan Surat Jalan!',
         icon: 'done_outline',
         color: 'secondary'
       })
     },
 
-    showsoftDeleteSuratJalanError: function() {
+    showEnableSuratJalanError: function() {
       let currentObj = this
       currentObj.$q.notify({
-        message: 'Gagal Menghapus Surat Jalan',
+        message: 'Gagal Mengaktifkan Surat Jalan',
         icon: 'clear',
         color: 'red'
       })
     },
 
-    softDeleteSuratJalan: function(id) {
+    enableSuratJalan: function(id) {
       let currentObj = this
         
       
@@ -303,12 +263,12 @@ export default {
 
         var existing = JSON.parse(localStorage.getItem('suratJalan'));
 
-        existing[id].disabled = "true"
+        existing[id].disabled = "false"
                
 
         localStorage.setItem('suratJalan', JSON.stringify(existing));
 
-        currentObj.showsoftDeleteSuratJalanSuccess()
+        currentObj.showEnableSuratJalanSuccess()
         currentObj.createSuratLoading = false
         currentObj.getSuratJalan()
         currentObj.onRequest({
@@ -319,7 +279,7 @@ export default {
         console.log(e)
         // data wasn't successfully saved due to
         // a Web Storage API error
-        currentObj.showsoftDeleteSuratJalanError()
+        currentObj.showEnableSuratJalanError()
         currentObj.createSuratLoading = false
       }
     },
@@ -411,35 +371,6 @@ export default {
       })
 
     },
-
-    exportTable: function() {
-      // naive encoding to csv format
-      let currentObj = this
-      const content = [ currentObj.columns.map(col => wrapCsvValue(col.label)) ].concat(
-        currentObj.list.map(row => currentObj.columns.map(col => wrapCsvValue(
-          typeof col.field === 'function'
-            ? col.field(row)
-            : row[col.field === void 0 ? col.name : col.field],
-          col.format
-        )).join(','))
-      ).join('\r\n')
-
-      const status = exportFile(
-        'table-export.csv',
-        content,
-        'text/csv'
-      )
-
-      if (status !== true) {
-        currentObj.$q.notify({
-          message: 'Browser denied file download...',
-          color: 'negative',
-          icon: 'warning'
-        })
-      }
-    },
- 
-
   }, // methods
 
   mounted: function() {
@@ -454,5 +385,4 @@ export default {
 
   }, // Mounted
 }
-
 </script>
