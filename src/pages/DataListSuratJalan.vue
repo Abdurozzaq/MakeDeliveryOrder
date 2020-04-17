@@ -74,6 +74,7 @@
                         
                         <q-btn color="primary" class="q-mr-md" label="Edit" :to="{ path: 'edit', query: {id: props.row.id} }" icon="edit" />
                         <q-btn color="red" class="q-mr-md" label="Soft Delete" @click="softDeleteSuratJalan(props.row.id)" icon="delete" />
+                        <q-btn color="green" class="q-mr-md" label="Print" :to="{ path: 'print', query: {id: props.row.id} }" icon="print" />
 
                       </div>
                     </div>
@@ -260,7 +261,7 @@ export default {
 
       try {
         if (localStorage.getItem('suratJalan') != null) {
-          currentObj.list = JSON.parse(localStorage.getItem('suratJalan')).filter(suratJalan => suratJalan.disabled === false)
+          currentObj.list = JSON.parse(localStorage.getItem('suratJalan')).filter(suratJalan => suratJalan.disabled === "false")  
         } else {
           currentObj.list = [] 
         }
@@ -396,9 +397,9 @@ export default {
       let currentObj = this
 
       if (currentObj.search == null) {
-        currentObj.list = JSON.parse(localStorage.getItem('suratJalan')).filter(suratJalan => suratJalan.disabled === false)
+        currentObj.list = JSON.parse(localStorage.getItem('suratJalan')).filter(suratJalan => suratJalan.disabled === "false")
       } else {
-        currentObj.list = JSON.parse(localStorage.getItem('suratJalan')).filter(suratJalan => suratJalan.disabled === false && suratJalan.no_surat_jalan === JSON.parse(currentObj.search))
+        currentObj.list = JSON.parse(localStorage.getItem('suratJalan')).filter(suratJalan => suratJalan.disabled === "false" && suratJalan.no_surat_jalan === JSON.parse(currentObj.search))
       }
 
       currentObj.onRequest({

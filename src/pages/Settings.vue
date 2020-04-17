@@ -43,18 +43,74 @@
                 </div>
 
                 <div class="col-12 col-md-8">
-                  <q-input 
-                    outlined 
-                    label="Alamat Perusahaan" 
-                    hint="Required"
-                    placeholder="Masukan Alamat Perusahaan." 
-                    type="textarea"
-                    v-model.trim="alamat_perusahaan"
-                    @input="$v.alamat_perusahaan.$touch()"
-                    :rules="[
-                        val => $v.alamat_perusahaan.required || 'Alamat Perusahaan harus di isi.',
-                    ]"
-                  />
+                  <div class="row">
+                    <div class="col-6">
+                      <q-input 
+                        class="q-mr-lg"
+                        outlined 
+                        label="Alamat Perusahaan" 
+                        hint="Required | Hanya Nama Jalan / Kampung"
+                        placeholder="Masukan Nama Jalan / Kampung." 
+                        type="text"
+                        v-model.trim="alamat_perusahaan"
+                        @input="$v.alamat_perusahaan.$touch()"
+                        :rules="[
+                            val => $v.alamat_perusahaan.required || 'Alamat Perusahaan harus di isi.',
+                        ]"
+                      />
+                    </div>
+
+                    <div class="col-6">
+                      <q-input 
+                        outlined 
+                        label="Kota / Kabupaten" 
+                        hint="Required"
+                        placeholder="Masukan Nama Kota / Kabupaten." 
+                        type="text"
+                        v-model.trim="kota"
+                        @input="$v.kota.$touch()"
+                        :rules="[
+                            val => $v.kota.required || 'Kota/Kabupaten harus di isi.',
+                        ]"
+                      />
+                    </div>
+                  </div>
+
+                  <br>
+
+                  <div class="row">
+                    <div class="col-6">
+                      <q-input 
+                        class="q-mr-lg"
+                        outlined 
+                        label="Kecamatan" 
+                        hint="Required"
+                        placeholder="Masukan Kecamatan." 
+                        type="text"
+                        v-model.trim="kecamatan"
+                        @input="$v.kecamatan.$touch()"
+                        :rules="[
+                            val => $v.kecamatan.required || 'Kecamatan harus di isi.',
+                        ]"
+                      />
+                    </div>
+
+                    <div class="col-6">
+                      <q-input 
+                        outlined 
+                        label="Kelurahan" 
+                        hint="Required"
+                        placeholder="Masukan Kelurahan." 
+                        type="text"
+                        v-model.trim="kelurahan"
+                        @input="$v.kelurahan.$touch()"
+                        :rules="[
+                            val => $v.kelurahan.required || 'Kelurahan harus di isi.',
+                        ]"
+                      />
+                    </div>
+                  </div>
+                  
                 </div>
               </div>
 
@@ -136,6 +192,9 @@ export default {
     return {
       nama_perusahaan: null,
       alamat_perusahaan: null,
+      kota: null,
+      kecamatan: null,
+      kelurahan: null,
       no_telp_perusahaan: null,
       no_fax_perusahaan: null,
       // Loading animation
@@ -148,6 +207,15 @@ export default {
       required,
     },
     alamat_perusahaan: {
+      required,
+    },
+    kota: {
+      required,
+    },
+    kecamatan: {
+      required,
+    },
+    kelurahan: {
       required,
     },
     no_telp_perusahaan: {
@@ -192,6 +260,9 @@ export default {
       const formData = {
         nama_perusahaan: currentObj.nama_perusahaan,
         alamat_perusahaan:  currentObj.alamat_perusahaan,
+        kota:  currentObj.kota,
+        kecamatan:  currentObj.kecamatan,
+        kelurahan:  currentObj.kelurahan,
         no_telp_perusahaan: currentObj.no_telp_perusahaan,
         no_fax_perusahaan: currentObj.no_fax_perusahaan
       }
@@ -219,6 +290,9 @@ export default {
   
         currentObj.nama_perusahaan = settings.nama_perusahaan
         currentObj.alamat_perusahaan = settings.alamat_perusahaan
+        currentObj.kota = settings.kota
+        currentObj.kecamatan = settings.kecamatan
+        currentObj.kelurahan = settings.kelurahan
         currentObj.no_telp_perusahaan = settings.no_telp_perusahaan
         currentObj.no_fax_perusahaan = settings.no_fax_perusahaan
         

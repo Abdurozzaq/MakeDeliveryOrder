@@ -363,7 +363,7 @@ export default {
           netto: currentObj.netto,
           supir: currentObj.supir,
           petugas: currentObj.petugas,
-          disabled: false
+          disabled: "false"
         }
       ]   
 
@@ -382,7 +382,7 @@ export default {
           netto: currentObj.netto,
           supir: currentObj.supir,
           petugas: currentObj.petugas,
-          disabled: false
+          disabled: "false"
         } 
 
         if(existing != null) {
