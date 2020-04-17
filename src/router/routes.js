@@ -8,6 +8,7 @@ const routes = [
       { path: '/settings', component: () => import('pages/Settings.vue') },
       { path: '/list', component: () => import('pages/DataListSuratJalan.vue') },
       { path: '/edit', component: () => import('pages/EditSuratJalan.vue') },
+      { path: '/parseCsv', component: () => import('pages/ImportCsv.vue') },
     ]
   }
 ]

@@ -157,6 +157,13 @@ export default {
            
         },
         { 
+          name: 'nama_barang', 
+          align: 'center', 
+          label: 'Nama Barang', 
+          field: 'nama_barang', 
+           
+        },
+        { 
           name: 'nama_customer', 
           align: 'center', 
           label: 'Nama Customer', 
@@ -217,6 +224,21 @@ export default {
           align: 'center', 
           label: 'Petugas', 
           field: 'petugas', 
+           
+        },
+        { 
+          name: 'disabled', 
+          align: 'center', 
+          label: 'Disabled? (system)', 
+          field: 'disabled', 
+           
+        },
+
+        { 
+          name: 'id', 
+          align: 'center', 
+          label: 'Id (system)', 
+          field: 'id', 
            
         },
       ],

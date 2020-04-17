@@ -82,6 +82,13 @@ export default {
           link: '/settings'
         },
 
+        {
+          title: 'Import Data Surat Jalan',
+          caption: 'Semua Data akan di gantikan.',
+          icon: 'publish',
+          link: '/parseCsv'
+        },
+
       ]
     }
   }
