@@ -11,14 +11,36 @@
           <q-separator />
 
           <q-card-section>
-            <q-table
 
-              title="Surat Jalan Yang Aktif"
-              :data="list"
+            <q-table
+              title="Tabel Data Surat Jalan"
+              :data="data"
               :columns="columns"
-              row-key="no_surat_jalan"
+              row-key="id"
               :pagination.sync="pagination"
+              :loading="loading"
+              :filter="filter"
+              @request="onRequest"
+              binary-state-sort
+              no-data-label="Data Surat Jalan Tidak ditemukan"
             >
+
+              <template v-slot:top-right>
+                <q-input dense debounce="300" class="q-mr-md" v-model="search" placeholder="Cari dengan Nomor Surat Jalan?">
+                </q-input>
+
+                <q-btn color="primary" @click="searchById" class="q-mr-md" label="Cari"/>
+                
+                <q-btn
+                  color="primary"
+                  icon-right="archive"
+                  label="Export to csv"
+                  no-caps
+                  @click="exportTable"
+                />
+
+              </template>
+
               <template v-slot:header="props">
                 <q-tr :props="props">
                   <q-th auto-width />
@@ -50,12 +72,16 @@
                     <div class="text-left">
                       <div class="row self-center">
                         
-                          <q-btn color="primary"  label="Edit" :to="{ path: 'edit', query: {id: props.row.id} }" icon="edit" />
+                        <q-btn color="primary" class="q-mr-md" label="Edit" :to="{ path: 'edit', query: {id: props.row.id} }" icon="edit" />
+                        <q-btn color="red" class="q-mr-md" label="Soft Delete" @click="softDeleteSuratJalan(props.row.id)" icon="delete" />
+
                       </div>
                     </div>
                   </q-td>
                 </q-tr>
               </template>
+
+
             </q-table>
           </q-card-section>
          
@@ -67,19 +93,51 @@
 </template>
 
 <script >
+import { exportFile } from 'quasar'
+
+function wrapCsvValue (val, formatFn) {
+  let formatted = formatFn !== void 0
+    ? formatFn(val)
+    : val
+
+  formatted = formatted === void 0 || formatted === null
+    ? ''
+    : String(formatted)
+
+  formatted = formatted.split('"').join('""')
+  /**
+   * Excel accepts \n and \r in strings, but some other CSV parsers do not
+   * Uncomment the next two lines to escape new lines
+   */
+  // .split('\n').join('\\n')
+  // .split('\r').join('\\r')
+
+  return `"${formatted}"`
+}
 
 export default {
   name: 'PageDataListSuratJalan',
 
   data () {
     return {
+
+      parseCsv: [],
+
+      data: [],
       list: null,
+      
+      // Search Keyword
+      search: null,
+
+
+      filter: '',
+      loading: false,
       pagination: {
         sortBy: 'no_surat_jalan',
         descending: false,
-        page: 2,
-        rowsPerPage: 10,
-        rowsNumber: null,
+        page: 1,
+        rowsPerPage: 3,
+        rowsNumber: 10
       },
       columns: [
         {
@@ -89,77 +147,77 @@ export default {
           align: 'left',
           field: row => row.no_surat_jalan,
           format: val => `${val}`,
-          sortable: true
+          sortable: true 
         },
         { 
           name: 'judul_surat_jalan', 
           align: 'center', 
           label: 'Judul Surat Jalan', 
           field: 'judul_surat_jalan', 
-          sortable: true 
+           
         },
         { 
           name: 'nama_customer', 
           align: 'center', 
           label: 'Nama Customer', 
           field: 'nama_customer', 
-          sortable: true 
+           
         },
        { 
           name: 'transporter', 
           align: 'center', 
           label: 'Transporter', 
           field: 'transporter', 
-          sortable: true 
+           
         },
         { 
           name: 'no_do_po', 
           align: 'center', 
           label: 'No DO/PO', 
           field: 'no_do_po', 
-          sortable: true 
+           
         },
         { 
           name: 'no_kendaraan', 
           align: 'center', 
           label: 'No Kendaraan', 
           field: 'no_kendaraan', 
-          sortable: true 
+           
         },
         { 
           name: 'gross', 
           align: 'center', 
           label: 'Gross', 
           field: 'gross', 
-          sortable: true 
+           
         },
         { 
           name: 'tare', 
           align: 'center', 
           label: 'Tare', 
           field: 'tare', 
-          sortable: true 
+           
         },
         { 
           name: 'netto', 
           align: 'center', 
           label: 'Netto', 
           field: 'netto', 
-          sortable: true 
+           
         },
         { 
           name: 'supir', 
           align: 'center', 
           label: 'Supir', 
           field: 'supir', 
-          sortable: true 
+           
         },
         { 
           name: 'petugas', 
           align: 'center', 
           label: 'Petugas', 
           field: 'petugas', 
-          sortable: true 
+           
         },
       ],
 
@@ -192,11 +250,182 @@ export default {
       }
     },
 
+    /**
+      * Soft Delete Feature
+      */
+    showsoftDeleteSuratJalanSuccess: function() {
+      let currentObj = this
+      currentObj.$q.notify({
+        message: 'Berhasil Menghapus Surat Jalan!',
+        icon: 'done_outline',
+        color: 'secondary'
+      })
+    },
+
+    showsoftDeleteSuratJalanError: function() {
+      let currentObj = this
+      currentObj.$q.notify({
+        message: 'Gagal Menghapus Surat Jalan',
+        icon: 'clear',
+        color: 'red'
+      })
+    },
+
+    softDeleteSuratJalan: function(id) {
+      let currentObj = this
+        
+      
+
+      try {
+        currentObj.settingsLoading = true
+
+        var existing = JSON.parse(localStorage.getItem('suratJalan'));
+
+        existing[id].disabled = true
+               
+
+        localStorage.setItem('suratJalan', JSON.stringify(existing));
+
+        currentObj.showsoftDeleteSuratJalanSuccess()
+        currentObj.createSuratLoading = false
+        currentObj.getSuratJalan()
+      } catch (e) {
+        console.log(e)
+        // data wasn't successfully saved due to
+        // a Web Storage API error
+        currentObj.showsoftDeleteSuratJalanError()
+        currentObj.createSuratLoading = false
+      }
+    },
+
+    onRequest (props) {
+      const { page, rowsPerPage, sortBy, descending } = props.pagination
+      const filter = props.filter
+
+      this.loading = true
+
+      // emulate server
+      setTimeout(() => {
+        // update rowsCount with appropriate value
+        this.pagination.rowsNumber = this.getRowsNumberCount(filter)
+
+        // get all rows if "All" (0) is selected
+        const fetchCount = rowsPerPage === 0 ? this.pagination.rowsNumber : rowsPerPage
+
+        // calculate starting row of data
+        const startRow = (page - 1) * rowsPerPage
+
+        // fetch data from "server"
+        const returnedData = this.fetchFromServer(startRow, fetchCount, filter, sortBy, descending)
+
+        // clear out existing data and add new
+        this.data.splice(0, this.data.length, ...returnedData)
+
+        // don't forget to update local pagination object
+        this.pagination.page = page
+        this.pagination.rowsPerPage = rowsPerPage
+        this.pagination.sortBy = sortBy
+        this.pagination.descending = descending
+
+        // ...and turn of loading indicator
+        this.loading = false
+      }, 1500)
+    },
+
+    // emulate ajax call
+    // SELECT * FROM ... WHERE...LIMIT...
+    fetchFromServer (startRow, count, filter, sortBy, descending) {
+      const data = filter
+        ? this.list.filter(row => row.name.includes(filter))
+        : this.list.slice()
+
+      // handle sortBy
+      if (sortBy) {
+        const sortFn = sortBy === 'desc'
+          ? (descending
+            ? (a, b) => (a.name > b.name ? -1 : a.name < b.name ? 1 : 0)
+            : (a, b) => (a.name > b.name ? 1 : a.name < b.name ? -1 : 0)
+          )
+          : (descending
+            ? (a, b) => (parseFloat(b[sortBy]) - parseFloat(a[sortBy]))
+            : (a, b) => (parseFloat(a[sortBy]) - parseFloat(b[sortBy]))
+          )
+        data.sort(sortFn)
+      }
+
+      return data.slice(startRow, startRow + count)
+    },
+
+    // emulate 'SELECT count(*) FROM ...WHERE...'
+    getRowsNumberCount (filter) {
+      if (!filter) {
+        return this.list.length
+      }
+      let count = 0
+      this.list.forEach((treat) => {
+        if (treat.name.includes(filter)) {
+          ++count
+        }
+      })
+      return count
+    },
+
+    searchById: function() {
+      let currentObj = this
+
+      if (currentObj.search == null) {
+        currentObj.list = JSON.parse(localStorage.getItem('suratJalan')).filter(suratJalan => suratJalan.disabled === false)
+      } else {
+        currentObj.list = JSON.parse(localStorage.getItem('suratJalan')).filter(suratJalan => suratJalan.disabled === false && suratJalan.no_surat_jalan === JSON.parse(currentObj.search))
+      }
+
+      currentObj.onRequest({
+        pagination: this.pagination,
+        filter: undefined
+      })
+
+    },
+
+    exportTable: function() {
+      // naive encoding to csv format
+      let currentObj = this
+      const content = [ currentObj.columns.map(col => wrapCsvValue(col.label)) ].concat(
+        currentObj.list.map(row => currentObj.columns.map(col => wrapCsvValue(
+          typeof col.field === 'function'
+            ? col.field(row)
+            : row[col.field === void 0 ? col.name : col.field],
+          col.format
+        )).join(','))
+      ).join('\r\n')
+
+      const status = exportFile(
+        'table-export.csv',
+        content,
+        'text/csv'
+      )
+
+      if (status !== true) {
+        currentObj.$q.notify({
+          message: 'Browser denied file download...',
+          color: 'negative',
+          icon: 'warning'
+        })
+      }
+    },
+ 
+
   }, // methods
 
   mounted: function() {
     let currentObj = this
     currentObj.getSuratJalan()
+
+    // get initial data from server (1st page)
+    currentObj.onRequest({
+      pagination: this.pagination,
+      filter: undefined
+    })
+
   }, // Mounted
 }
 

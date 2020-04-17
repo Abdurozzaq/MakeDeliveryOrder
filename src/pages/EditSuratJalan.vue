@@ -323,7 +323,7 @@ export default {
     showeditSuratJalanSuccess: function() {
       let currentObj = this
       currentObj.$q.notify({
-        message: 'Berhasil Membuat Surat Jalan!',
+        message: 'Berhasil Edit Surat Jalan!',
         icon: 'done_outline',
         color: 'secondary'
       })
@@ -332,7 +332,7 @@ export default {
     showeditSuratJalanError: function() {
       let currentObj = this
       currentObj.$q.notify({
-        message: 'Gagal Membuat Surat Jalan',
+        message: 'Gagal Edit Surat Jalan',
         icon: 'clear',
         color: 'red'
       })

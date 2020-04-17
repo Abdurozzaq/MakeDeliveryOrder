@@ -16,7 +16,7 @@ module.exports = function (/* ctx */) {
     // https://quasar.dev/quasar-cli/cli-documentation/boot-files
     boot: [
       'vuelidate',
-      'migration'
+      'importCsv'
     ],
 
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css
