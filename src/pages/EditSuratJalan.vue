@@ -19,7 +19,7 @@
                     class="q-mr-sm"
                     label="Judul Surat Jalan" 
                     hint="Required"
-                    :readonly="true"`
+                    :readonly="true"
                     placeholder="Masukan Judul Surat Jalan." 
                     type="text"
                     v-model.trim="judul_surat_jalan"
@@ -436,7 +436,7 @@ export default {
       try {
         currentObj.settingsLoading = true
 
-        var existing = JSON.parse(localStorage.getItem('suratJalan'));
+        var existing = JSON.parse(localStorage.getItem('suratJalan'))
 
         let id = currentObj.$route.query.id
 
@@ -457,7 +457,7 @@ export default {
         existing[id].supir = currentObj.supir
         existing[id].petugas = currentObj.petugas        
 
-        localStorage.setItem('suratJalan', JSON.stringify(existing));
+        localStorage.setItem('suratJalan', JSON.stringify(existing))
 
         currentObj.showeditSuratJalanSuccess()
         currentObj.createSuratLoading = false
@@ -472,7 +472,7 @@ export default {
 
     getOldData: function() {
       let currentObj = this
-      let existing = JSON.parse(localStorage.getItem('suratJalan'));
+      let existing = JSON.parse(localStorage.getItem('suratJalan'))
       let id = currentObj.$route.query.id
       currentObj.no_surat_jalan = existing[id].no_surat_jalan 
       currentObj.judul_surat_jalan = existing[id].judul_surat_jalan 
