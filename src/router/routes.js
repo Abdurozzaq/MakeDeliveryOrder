@@ -4,13 +4,13 @@ const routes = [
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/Index.vue') },
-      { path: '/settings', component: () => import('pages/Settings.vue') },
-      { path: '/list', component: () => import('pages/DataListSuratJalan.vue') },
-      { path: '/edit', component: () => import('pages/EditSuratJalan.vue') },
-      { path: '/parseCsv', component: () => import('pages/ImportCsv.vue') },
-      { path: '/print', component: () => import('pages/PrintPreview.vue') },
-      { path: '/trash', component: () => import('pages/DataListDeletedSuratJalan.vue') },
+      {name: 'home', path: '', component: () => import('pages/Index.vue') },
+      {name: 'settings', path: '/settings', component: () => import('pages/Settings.vue') },
+      {name: 'list', path: '/list', component: () => import('pages/DataListSuratJalan.vue') },
+      {name: 'edit', path: '/edit', component: () => import('pages/EditSuratJalan.vue') },
+      {name: 'parseCsv', path: '/parseCsv', component: () => import('pages/ImportCsv.vue') },
+      {name: 'print', path: '/print', component: () => import('pages/PrintPreview.vue') },
+      {name: 'trash', path: '/trash', component: () => import('pages/DataListDeletedSuratJalan.vue') },
     ]
   }
 ]

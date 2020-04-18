@@ -30,7 +30,8 @@
                 </q-input>
 
                 <q-btn color="primary" @click="searchById" class="q-mr-md" label="Cari"/>
-                
+                <q-btn color="primary" @click="resetButton" class="q-mr-md" label="Reset Hasil"/>
+
                 <q-btn
                   color="primary"
                   icon-right="archive"
@@ -410,6 +411,15 @@ export default {
         filter: undefined
       })
 
+    },
+
+    resetButton: function() {
+      let currentObj = this
+      currentObj.list = JSON.parse(localStorage.getItem('suratJalan')).filter(suratJalan => suratJalan.disabled === "false")
+      currentObj.onRequest({
+        pagination: this.pagination,
+        filter: undefined
+      })
     },
 
     exportTable: function() {

@@ -72,27 +72,27 @@ export default {
           title: 'Data List Surat Jalan',
           caption: 'Edit Atau Delete Surat Jalan Disini.',
           icon: 'list',
-          link: '/list'
+          link: 'list'
         },
 
         {
           title: 'Settings Perusahaan',
           caption: 'Untuk Edit Data Perusahaan.',
           icon: 'book',
-          link: '/settings'
+          link: 'settings'
         },
 
         {
           title: 'Import Data Surat Jalan',
           caption: 'Semua Data akan di gantikan saat di import.',
           icon: 'publish',
-          link: '/parseCsv'
+          link: 'parseCsv'
         },
         {
           title: 'Data List Surat Jalan Terhapus',
           caption: 'Lihat Surat Jalan yang terhapus.',
           icon: 'delete',
-          link: '/trash'
+          link: 'trash'
         },
 
       ]

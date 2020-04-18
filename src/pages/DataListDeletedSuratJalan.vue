@@ -31,7 +31,7 @@
 
                 <q-btn color="primary" @click="searchById" class="q-mr-md" label="Cari"/>
                 
-
+                <q-btn color="primary" @click="resetButton" class="q-mr-md" label="Reset Hasil"/>
               </template>
 
               <template v-slot:header="props">
@@ -360,9 +360,9 @@ export default {
       let currentObj = this
 
       if (currentObj.search == null) {
-        currentObj.list = JSON.parse(localStorage.getItem('suratJalan')).filter(suratJalan => suratJalan.disabled === "false")
+        currentObj.list = JSON.parse(localStorage.getItem('suratJalan')).filter(suratJalan => suratJalan.disabled === "true")
       } else {
-        currentObj.list = JSON.parse(localStorage.getItem('suratJalan')).filter(suratJalan => suratJalan.disabled === "false" && suratJalan.no_surat_jalan === JSON.parse(currentObj.search))
+        currentObj.list = JSON.parse(localStorage.getItem('suratJalan')).filter(suratJalan => suratJalan.disabled === "true" && suratJalan.no_surat_jalan === JSON.parse(currentObj.search))
       }
 
       currentObj.onRequest({
@@ -371,6 +371,15 @@ export default {
       })
 
     },
+
+    resetButton: function() {
+      let currentObj = this
+      currentObj.list = JSON.parse(localStorage.getItem('suratJalan')).filter(suratJalan => suratJalan.disabled === "true")
+      currentObj.onRequest({
+        pagination: this.pagination,
+        filter: undefined
+      })
+    }
   }, // methods
 
   mounted: function() {
