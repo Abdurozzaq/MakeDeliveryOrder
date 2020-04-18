@@ -178,7 +178,10 @@ module.exports = function (/* ctx */) {
       builder: {
         // https://www.electron.build/configuration/configuration
 
-        appId: 'makedeliveryorder'
+        "appId": 'makedeliveryorder',
+        "win": {
+          "target": "msi"
+        }
       },
 
       // More info: https://quasar.dev/quasar-cli/developing-electron-apps/node-integration

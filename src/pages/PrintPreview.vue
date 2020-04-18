@@ -12,28 +12,28 @@
 
           <q-card-section>
 
-            <table id="suratJalan" align="center" style="width:100%; height: 50%">
+            <table id="suratJalan" align="center" style="font-family=sans-serif; width:100%; height: 50%">
               <tr>
                 <td colspan="5">
                   <p style="font-size:12px">
-                    <b>{{ data_perusahaan.nama_perusahaan }}</b>
+                    <b>{{ nama_perusahaan }}</b>
                     <br>
-                    {{ data_perusahaan.alamat_perusahaan }}
+                    {{ alamat_perusahaan }}
                     <br>
-                    {{ data_perusahaan.kelurahan }}, {{ data_perusahaan.kecamatan }}
+                    {{ kelurahan }}, {{ kecamatan }}
                     <br>
-                    {{ data_perusahaan.kota}}
+                    {{ kota}}
                     <br>
-                    Telp: {{ data_perusahaan.no_telp_perusahaan }} Fax: {{ data_perusahaan.no_fax_perusahaan}}
+                    Telp: {{ no_telp_perusahaan }} Fax: {{ no_fax_perusahaan}}
                   </p>
                 </td>
               </tr>
               
               <tr >
-                <td colspan="5" >
-                  <p align="center" style="font-size:14px"><b>{{ judul_surat_jalan.toUpperCase() }}</b></p>
-                  <p align="right" style="font-size:12px">No Surat Jalan : {{ no_surat_jalan }}</p>
-                  <hr>
+                <td colspan="5" style="border-bottom: thin solid">
+                  <p align="center" style="font-size:16px; margin: 0 0 0px;">{{ judul_surat_jalan.toUpperCase() }}</p>
+                  <p align="right" style="font-size:12px; margin: 0 0 0px;">No. Tiket : {{ no_surat_jalan }}</p>
+
                 </td>
               </tr>
 
@@ -44,11 +44,11 @@
                     <br>
                     Nama Barang
                     <br>
-                    Customer
+                    Customer/Supplier
                     <br>
                     Transporter
                     <br>
-                    Nomor DO/PO
+                    No. DO/PO
                     <br>
                     Gross
                     <br>
@@ -78,7 +78,7 @@
 
                 <td>
                   <p style="font-size:12px">
-                    {{ no_kendaraan }}
+                    <b>{{ no_kendaraan }}</b>
                     <br>
                     {{ nama_barang }}
                     <br>
@@ -133,21 +133,21 @@
 
               <tr>
                 <td>
-                  <p style="font-size:12px">
+                  <p style="font-size:12px; margin: 0 0 3px;">
                     <b>Netto</b>
 
                   </p>
                 </td>
 
                 <td>
-                  <p style="font-size:12px">
+                  <p style="font-size:12px; margin: 0 0 3px;">
                     <b>:</b>
                     
                   </p>
                 </td>
 
                 <td colspan="3">
-                  <p style="font-size:12px">
+                  <p style="font-size:12px; margin: 0 0 3px;">
                     <b>{{ netto }} kg</b>
                     
                   </p>
@@ -155,8 +155,8 @@
               </tr>
               
               <tr >
-                <td colspan="5" >
-                  <hr>
+                <td colspan="5" style="border-top: thin solid; border-bottom: thin solid" >
+                  
                 </td>
               </tr>
 
@@ -164,21 +164,21 @@
 
               <tr>
                 <td colspan="2" width="15%">
-                  <p align="center" style="font-size:12px">
+                  <p align="center" style="font-size:12px; margin-top: 8px;">
                     Petugas
                     <br>
                     <br>
                     <br>
-                    {{ petugas }}                   
+                    <b>{{ petugas }}</b>                   
                   </p>
                 </td>
                 <td colspan="3" width="15%">
-                  <p align="center" style="font-size:12px">
+                  <p align="center" style="font-size:12px; margin-top: 8px;">
                     Pengemudi
                     <br>
                     <br>
                     <br>
-                    {{ supir }}
+                    <b>{{ supir }}</b>
                   </p>
                 </td>
 
@@ -206,6 +206,13 @@
 
 <script >
 import { Printd } from 'printd'
+const cssText = `
+  p {
+    color: black;
+    font-family: sans-serif;
+  }
+`
+
 export default {
   name: 'PagePrintPreview',
 
@@ -230,13 +237,31 @@ export default {
       supir: null,
       petugas: null,
       id_surat: null,
+
+      // Data PT
+      nama_perusahaan: null,
+      alamat_perusahaan: null,
+      kota: null,
+      kecamatan: null,
+      kelurahan: null,
+      no_telp_perusahaan: null,
+      no_fax_perusahaan: null,
+
     }
   },
 
   methods: {
     getDataPerusahaan: function() {
       let currentObj = this
-      currentObj.data_perusahaan = JSON.parse(localStorage.getItem('settings'))
+      var data_pt = JSON.parse(localStorage.getItem('settings'))
+
+      currentObj.nama_perusahaan = data_pt.nama_perusahaan
+      currentObj.alamat_perusahaan = data_pt.alamat_perusahaan
+      currentObj.kota = data_pt.kota
+      currentObj.kecamatan = data_pt.kecamatan
+      currentObj.kelurahan = data_pt.kelurahan
+      currentObj.no_telp_perusahaan =  data_pt.no_telp_perusahaan
+      currentObj.no_fax_perusahaan = data_pt.no_fax_perusahaan
     },
 
     getDataSuratJalan: function() {
@@ -267,7 +292,7 @@ export default {
       
     print: function() {
       const d = new Printd()
-      d.print( document.getElementById('suratJalan') )
+      d.print( document.getElementById('suratJalan'), [ cssText ] )
     }
 
   },

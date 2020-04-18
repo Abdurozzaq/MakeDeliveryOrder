@@ -258,8 +258,8 @@ export default {
       let currentObj = this
 
       const formData = {
-        nama_perusahaan: currentObj.nama_perusahaan,
         alamat_perusahaan:  currentObj.alamat_perusahaan,
+        nama_perusahaan: currentObj.nama_perusahaan,
         kota:  currentObj.kota,
         kecamatan:  currentObj.kecamatan,
         kelurahan:  currentObj.kelurahan,

@@ -19,6 +19,7 @@
                     class="q-mr-sm"
                     label="Judul Surat Jalan" 
                     hint="Required"
+                    :readonly="true"
                     placeholder="Masukan Judul Surat Jalan." 
                     type="text"
                     v-model.trim="judul_surat_jalan"
@@ -523,6 +524,7 @@ export default {
 
   mounted: function() {
     let currentObj = this
+    currentObj.judul_surat_jalan = "TIKET TIMBANGAN"
     currentObj.getUniqueId()
   }, // Mounted
 }
