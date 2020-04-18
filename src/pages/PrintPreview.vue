@@ -14,7 +14,7 @@
 
             <table id="suratJalan" align="center" style="width:100%; height: 50%">
               <tr>
-                <td colspan="3">
+                <td colspan="5">
                   <p style="font-size:12px">
                     <b>{{ data_perusahaan.nama_perusahaan }}</b>
                     <br>
@@ -30,7 +30,7 @@
               </tr>
               
               <tr >
-                <td colspan="3" >
+                <td colspan="5" >
                   <p align="center" style="font-size:14px"><b>{{ judul_surat_jalan.toUpperCase() }}</b></p>
                   <p align="right" style="font-size:12px">No Surat Jalan : {{ no_surat_jalan }}</p>
                   <hr>
@@ -93,6 +93,42 @@
                     {{ tare }} kg
                   </p>
                 </td>
+
+                <td>
+                  <p style="font-size:12px">
+                    
+                    <br>
+                    
+                    <br>
+                   
+                    <br>
+                    
+                    <br>
+                    
+                    <br>
+                    Jam {{gross_jam}}
+                    <br>
+                    Jam {{tare_jam}}
+                  </p>
+                </td>
+
+                <td>
+                  <p style="font-size:12px">
+                    
+                    <br>
+                    
+                    <br>
+                   
+                    <br>
+                    
+                    <br>
+                    
+                    <br>
+                    Tanggal {{gross_tgl}}
+                    <br>
+                    Tanggal {{tare_tgl}}
+                  </p>
+                </td>
               </tr>
 
               <tr>
@@ -110,7 +146,7 @@
                   </p>
                 </td>
 
-                <td>
+                <td colspan="3">
                   <p style="font-size:12px">
                     <b>{{ netto }} kg</b>
                     
@@ -119,7 +155,7 @@
               </tr>
               
               <tr >
-                <td colspan="3" >
+                <td colspan="5" >
                   <hr>
                 </td>
               </tr>
@@ -136,7 +172,7 @@
                     {{ petugas }}                   
                   </p>
                 </td>
-                <td width="15%">
+                <td colspan="3" width="15%">
                   <p align="center" style="font-size:12px">
                     Pengemudi
                     <br>
@@ -185,7 +221,11 @@ export default {
       no_do_po: null,
       no_kendaraan: null,
       gross: null,
+      gross_jam: null,
+      gross_tgl: null,
       tare:  null,
+      tare_jam:  null,
+      tare_tgl:  null,
       netto: null,
       supir: null,
       petugas: null,
@@ -213,7 +253,11 @@ export default {
       currentObj.no_do_po = existing[id].no_do_po 
       currentObj.no_kendaraan = existing[id].no_kendaraan 
       currentObj.gross = existing[id].gross 
+      currentObj.gross_jam = existing[id].gross_jam 
+      currentObj.gross_tgl = existing[id].gross_tgl 
       currentObj.tare = existing[id].tare 
+      currentObj.tare_jam = existing[id].tare_jam 
+      currentObj.tare_tgl = existing[id].tare_tgl 
       currentObj.netto = existing[id].netto 
       currentObj.supir = existing[id].supir 
       currentObj.petugas = existing[id].petugas

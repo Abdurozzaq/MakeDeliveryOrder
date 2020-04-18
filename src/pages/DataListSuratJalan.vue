@@ -201,10 +201,38 @@ export default {
            
         },
         { 
+          name: 'gross_jam', 
+          align: 'center', 
+          label: '[Gross] Jam di Timbang', 
+          field: 'gross_jam', 
+           
+        },
+        { 
+          name: 'gross_tgl', 
+          align: 'center', 
+          label: '[Gross] Tanggal di Timbang', 
+          field: 'gross_tgl', 
+           
+        },
+        { 
           name: 'tare', 
           align: 'center', 
           label: 'Tare', 
           field: 'tare', 
+           
+        },
+         { 
+          name: 'tare_jam', 
+          align: 'center', 
+          label: '[Tare] Jam di Timbang', 
+          field: 'tare_jam', 
+           
+        },
+        { 
+          name: 'tare_tgl', 
+          align: 'center', 
+          label: '[Tare] Tanggal di Timbang', 
+          field: 'tare_tgl', 
            
         },
         { 

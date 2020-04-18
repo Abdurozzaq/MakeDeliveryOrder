@@ -122,16 +122,11 @@
                           val => $v.no_do_po.required || 'No. DO/PO harus di isi.',
                       ]"
                     />
-                  
-                  </div>
 
-                </div>
+                    <br>
 
-                <div class="col-12 col-md-6 ">
-
-                  <div>
                     <q-input  
-                      class="q-mr-sm"
+                      class="q-mr-lg"
                       outlined
                       label="No Kendaraan" 
                       hint="Required"
@@ -147,15 +142,20 @@
                         <q-icon name="local_shipping" />
                       </template>
                     </q-input>
+                  
+                  </div>
 
-                    <br>
+                </div>
 
+                <div class="col-12 col-md-6 ">
+
+                  <div>
                     <q-input  
                       class="q-mr-sm"
                       outlined
                       label="Gross" 
                       hint="Required | Satuan Kilogram"
-                      placeholder="Masukan Gross Barang Dalam kg." 
+                      placeholder="Masukan Gross Barang." 
                       type="text"
                       v-model.trim="gross"
                       @input="$v.gross.$touch()"
@@ -164,6 +164,43 @@
                       ]"
                     />
 
+                    <br>
+                    <div class="row">
+                      <div class="col-6">
+                        <q-input  
+                        
+                          class="q-mr-sm"
+                          outlined
+                          label="[Gross] Jam di Timbang" 
+                          hint="Required | Contoh: 13:30"
+                          mask="##:##"
+                          placeholder="Masukan Jam dimana Gross di Timbang" 
+                          type="text"
+                          v-model.trim="gross_jam"
+                          @input="$v.gross_jam.$touch()"
+                          :rules="[
+                              val => $v.gross_jam.required || 'Jam Gross di Timbang harus di isi.',
+                          ]"
+                        />
+                      </div>
+
+                      <div class="col-6">
+                        <q-input 
+                          outlined
+                          label="[Gross] Tanggal di Timbang" 
+                          hint="Required | Format: DD/MM/YYYY"
+                          mask="##/##/####"
+                          placeholder="Masukan Tanggal Gross di Timbang" 
+                          type="text"
+                          v-model.trim="gross_tgl"
+                          @input="$v.gross_tgl.$touch()"
+                          :rules="[
+                              val => $v.gross_tgl.required || 'Tanggal Gross di Timbang harus di isi.',
+                          ]"
+                        />
+                      </div>
+                    </div>
+                    
                     <br>
 
                     <q-input  
@@ -179,6 +216,42 @@
                           val => $v.tare.required || 'Tare harus di isi.',
                       ]"
                     />
+                    <br>
+
+                    <div class="row">
+                      <div class="col-6">
+                        <q-input  
+                          class="q-mr-sm"
+                          outlined
+                          label="[Tare] Jam di Timbang" 
+                          hint="Required | Contoh: 13:30"
+                          mask="##:##"
+                          placeholder="Masukan Jam dimana Tare di Timbang" 
+                          type="text"
+                          v-model.trim="tare_jam"
+                          @input="$v.tare_jam.$touch()"
+                          :rules="[
+                              val => $v.tare_jam.required || 'Jam Tare di Timbang harus di isi.',
+                          ]"
+                        />
+                      </div>
+
+                      <div class="col-6">
+                        <q-input 
+                          outlined
+                          label="[Tare] Tanggal di Timbang" 
+                          hint="Required | Format: DD/MM/YYYY"
+                          mask="##/##/####"
+                          placeholder="Masukan Tanggal Tare di Timbang" 
+                          type="text"
+                          v-model.trim="tare_tgl"
+                          @input="$v.tare_tgl.$touch()"
+                          :rules="[
+                              val => $v.tare_tgl.required || 'Tanggal Tare di Timbang harus di isi.',
+                          ]"
+                        />
+                      </div>
+                    </div>
 
                     <br>
 
@@ -270,7 +343,11 @@ export default {
       no_do_po: null,
       no_kendaraan: null,
       gross: null,
+      gross_jam: null,
+      gross_tgl: null,
       tare: null,
+      tare_jam: null,
+      tare_tgl: null,
       netto: null,
       supir: null,
       petugas: null,
@@ -305,7 +382,19 @@ export default {
     gross: {
       required,
     },
+    gross_jam: {
+      required,
+    },
+    gross_tgl: {
+      required,
+    },
     tare: {
+      required,
+    },
+    tare_jam: {
+      required,
+    },
+    tare_tgl: {
       required,
     },
     netto: {
@@ -359,7 +448,11 @@ export default {
           no_do_po: currentObj.no_do_po,
           no_kendaraan: currentObj.no_kendaraan,
           gross: currentObj.gross,
+          gross_jam: currentObj.gross_jam,
+          gross_tgl: currentObj.gross_tgl,
           tare: currentObj.tare,
+          tare_jam: currentObj.tare_jam,
+          tare_tgl: currentObj.tare_tgl,
           netto: currentObj.netto,
           supir: currentObj.supir,
           petugas: currentObj.petugas,
@@ -378,7 +471,11 @@ export default {
           no_do_po: currentObj.no_do_po,
           no_kendaraan: currentObj.no_kendaraan,
           gross: currentObj.gross,
+          gross_jam: currentObj.gross_jam,
+          gross_tgl: currentObj.gross_tgl,
           tare: currentObj.tare,
+          tare_jam: currentObj.tare_jam,
+          tare_tgl: currentObj.tare_tgl,
           netto: currentObj.netto,
           supir: currentObj.supir,
           petugas: currentObj.petugas,
