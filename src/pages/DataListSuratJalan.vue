@@ -453,6 +453,15 @@ export default {
     exportTable: function() {
       // naive encoding to csv format
       let currentObj = this
+
+      currentObj.getSuratJalan()
+
+      // get initial data from server (1st page)
+      currentObj.onRequest({
+        pagination: this.pagination,
+        filter: undefined
+      })
+
       const content = [ currentObj.columns.map(col => wrapCsvValue(col.label)) ].concat(
         currentObj.list.map(row => currentObj.columns.map(col => wrapCsvValue(
           typeof col.field === 'function'

@@ -253,15 +253,21 @@ export default {
   methods: {
     getDataPerusahaan: function() {
       let currentObj = this
+
+      
       var data_pt = JSON.parse(localStorage.getItem('settings'))
 
-      currentObj.nama_perusahaan = data_pt.nama_perusahaan
-      currentObj.alamat_perusahaan = data_pt.alamat_perusahaan
-      currentObj.kota = data_pt.kota
-      currentObj.kecamatan = data_pt.kecamatan
-      currentObj.kelurahan = data_pt.kelurahan
-      currentObj.no_telp_perusahaan =  data_pt.no_telp_perusahaan
-      currentObj.no_fax_perusahaan = data_pt.no_fax_perusahaan
+      if(data_pt == null) {
+        currentObj.showDataPtError()
+      } else {
+        currentObj.nama_perusahaan = data_pt.nama_perusahaan
+        currentObj.alamat_perusahaan = data_pt.alamat_perusahaan
+        currentObj.kota = data_pt.kota
+        currentObj.kecamatan = data_pt.kecamatan
+        currentObj.kelurahan = data_pt.kelurahan
+        currentObj.no_telp_perusahaan =  data_pt.no_telp_perusahaan
+        currentObj.no_fax_perusahaan = data_pt.no_fax_perusahaan
+      }
     },
 
     getDataSuratJalan: function() {
@@ -291,9 +297,27 @@ export default {
     },
       
     print: function() {
-      const d = new Printd()
-      d.print( document.getElementById('suratJalan'), [ cssText ] )
-    }
+      let currentObj = this
+
+      var data_pt = JSON.parse(localStorage.getItem('settings'))
+
+      if(data_pt == null) {
+        currentObj.showDataPtError()
+      } else {
+        const d = new Printd()
+        d.print( document.getElementById('suratJalan'), [ cssText ] )
+      }
+      
+    },
+
+    showDataPtError: function() {
+      let currentObj = this
+      currentObj.$q.notify({
+        message: 'Tidak Bisa Print Dulu, Pastikan Anda Telah Setting Data Perusahaan.',
+        icon: 'clear',
+        color: 'red'
+      })
+    },
 
   },
 
