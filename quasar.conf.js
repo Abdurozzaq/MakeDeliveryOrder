@@ -150,7 +150,7 @@ module.exports = function (/* ctx */) {
     // Full list of options: https://quasar.dev/quasar-cli/developing-cordova-apps/configuring-cordova
     cordova: {
       // noIosLegacyBuildFlag: true, // uncomment only if you know what you are doing
-      id: 'com.makedeliveryorder'
+      id: 'com.makedevliveryorder'
     },
 
     // Full list of options: https://quasar.dev/quasar-cli/developing-capacitor-apps/configuring-capacitor
@@ -178,7 +178,7 @@ module.exports = function (/* ctx */) {
       builder: {
         // https://www.electron.build/configuration/configuration
 
-        "appId": 'makedeliveryorder',
+        "appId": 'makedevliveryorder',
       },
 
       // More info: https://quasar.dev/quasar-cli/developing-electron-apps/node-integration

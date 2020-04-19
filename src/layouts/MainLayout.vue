@@ -12,7 +12,7 @@
         />
 
         <q-toolbar-title>
-          MakeDeliveryOrder App
+          MakeDevliveryOrder App
         </q-toolbar-title>
 
         <div>Ver 0.1</div>
